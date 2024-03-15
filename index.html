@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lembretes</title>
+
+
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background-color: #333;
+    }
+
+    .lembrete {
+        width: 75%;
+        background-color: blue;
+        border-radius: 5px;
+        padding: 10px;
+        color: aliceblue;
+    }
+
+    input,
+    button,textarea {
+        background-color: #333;
+        width: 50%;
+        padding: 5px;
+        color: aliceblue;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    textarea{
+        height: 50px;
+    }
+</style>
+
+<body>
+    <center>
+        <br>
+        <br>
+        <div style="background-color:#666 ; padding: 10px;">
+            <textarea type="text" name="" id="Lembrete" placeholder="Digite aqui seu lembrete..."></textarea><br>
+            <input type="color" name="" id="cor" style="padding: 0;"><br><br>
+            <button id="Salvar">Salvar</button><br>
+        </div>
+        <br>
+        <br>
+
+
+        <script>
+
+            //Lista os lembretes salvos
+            for (let index = 0; index < 100; index++) {
+                if (localStorage.getItem('lembreteTexto_' + index)) {
+                    document.write(`
+                    <div class="lembrete" style="background-color: ${localStorage.getItem('lembreteCor_' + index)
+                        }">
+            <button id="lembrete${index}" style="background-color:red;color:aliceblue;padding:3px;width:10%">X</button><br>
+            
+        <br>
+         ${localStorage.getItem('lembreteTexto_' + index)
+                        }
+        </div>
+        <br>
+        <br>
+                    `);
+                }
+            }
+        </script>
+
+
+
+
+    </center>
+</body>
+<script>
+    //opcao de deletar ao clicar no botao
+    for (let index = 0; index < 100; index++) {
+        if (document.getElementById('lembrete' + index)) {
+            document.getElementById('lembrete' + index).addEventListener('click', () => {
+                localStorage.removeItem('lembreteTexto_' + index);
+                localStorage.removeItem('lembreteCor_' + index);
+                window.location.reload();
+            })
+        }
+    }
+</script>
+
+<script>
+
+    const Lembretes = document.getElementById('Lembrete');
+    const cor = document.getElementById('cor');
+    const Salvar = document.getElementById('Salvar');
+
+
+
+    //Add um lembrete
+    Salvar.addEventListener('click', () => {
+
+        let i = 0;
+
+        for (let index = 0; index < 100; index++) {
+            if (!localStorage.getItem('lembreteTexto_' + index)) {
+                i = index;
+                break;
+            }
+        }
+        localStorage.setItem('lembreteTexto_' + i, Lembretes.value);
+        localStorage.setItem('lembreteCor_' + i, cor.value);
+        window.location.reload();
+    });
+
+</script>
+
+</html>
