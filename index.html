@@ -8,23 +8,17 @@
     :root {
       --bg: #0f172a;
       --panel: rgba(255, 255, 255, 0.08);
-      --panel-strong: rgba(255, 255, 255, 0.14);
       --text: #f8fafc;
       --muted: #94a3b8;
       --accent: #facc15;
       --accent-2: #38bdf8;
-      --danger: #fb7185;
       --radius-xl: 28px;
       --radius-md: 18px;
       --shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       min-height: 100vh;
@@ -34,123 +28,34 @@
         radial-gradient(circle at top right, rgba(250, 204, 21, 0.20), transparent 30%),
         linear-gradient(135deg, #020617 0%, #0f172a 48%, #111827 100%);
       padding: 32px;
+      display: flex;
+      justify-content: center;
     }
 
     .app {
-      width: min(1180px, 100%);
-      margin: 0 auto;
+      width: min(1100px, 100%);
     }
 
-    .hero {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 28px;
-      align-items: stretch;
-      margin-bottom: 28px;
-    }
-
-    .hero-card,
-    .composer,
-    .note {
-      border: 1px solid rgba(255, 255, 255, 0.14);
+    /* COMPOSER CENTRALIZADO */
+    .composer {
+      margin: 0 auto 40px;
+      max-width: 520px;
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      border: 1px solid rgba(255,255,255,.12);
       background: var(--panel);
-      backdrop-filter: blur(22px);
+      backdrop-filter: blur(20px);
       box-shadow: var(--shadow);
     }
 
-    .hero-card {
-      border-radius: var(--radius-xl);
-      padding: 34px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .hero-card::after {
-      content: "";
-      position: absolute;
-      width: 210px;
-      height: 210px;
-      right: -62px;
-      top: -74px;
-      background: linear-gradient(135deg, rgba(250, 204, 21, .62), rgba(56, 189, 248, .34));
-      border-radius: 50%;
-      filter: blur(2px);
-      opacity: .8;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: #fde68a;
-      background: rgba(250, 204, 21, .12);
-      border: 1px solid rgba(250, 204, 21, .24);
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 22px;
-    }
-
-    h1 {
-      max-width: 620px;
-      font-size: clamp(38px, 7vw, 78px);
-      line-height: .92;
-      letter-spacing: -0.07em;
+    .composer h1 {
+      font-size: 32px;
       margin-bottom: 18px;
-      position: relative;
-      z-index: 1;
+      text-align: center;
+      letter-spacing: -0.04em;
     }
 
-    .hero-card p {
-      max-width: 560px;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.65;
-      position: relative;
-      z-index: 1;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 28px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .stat {
-      background: rgba(255, 255, 255, .08);
-      border: 1px solid rgba(255, 255, 255, .1);
-      border-radius: 18px;
-      padding: 16px;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 24px;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .composer {
-      border-radius: var(--radius-xl);
-      padding: 24px;
-    }
-
-    .composer h2 {
-      font-size: 22px;
-      margin-bottom: 16px;
-      letter-spacing: -0.03em;
-    }
-
-    .field {
-      margin-bottom: 14px;
-    }
+    .field { margin-bottom: 14px; }
 
     label {
       display: block;
@@ -160,240 +65,160 @@
       margin-bottom: 8px;
     }
 
-    input,
-    textarea,
-    select {
+    input, textarea, select {
       width: 100%;
       color: var(--text);
       background: rgba(15, 23, 42, .72);
       border: 1px solid rgba(255, 255, 255, .12);
       border-radius: 16px;
-      padding: 14px 15px;
+      padding: 14px;
       outline: none;
       font: inherit;
-      transition: .2s ease;
     }
 
-    textarea {
-      min-height: 130px;
-      resize: vertical;
-    }
-
-    input:focus,
-    textarea:focus,
-    select:focus {
-      border-color: rgba(56, 189, 248, .8);
-      box-shadow: 0 0 0 4px rgba(56, 189, 248, .12);
-    }
+    textarea { min-height: 120px; resize: vertical; }
 
     .row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 10px;
     }
 
     .actions {
       display: flex;
       gap: 10px;
-      margin-top: 18px;
+      margin-top: 16px;
     }
 
     button {
       border: 0;
-      border-radius: 16px;
-      padding: 14px 18px;
-      font-weight: 800;
+      border-radius: 14px;
+      padding: 12px;
+      font-weight: 700;
       cursor: pointer;
-      transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
     }
 
     .primary {
       flex: 1;
-      color: #111827;
       background: linear-gradient(135deg, #facc15, #fde68a);
-      box-shadow: 0 18px 40px rgba(250, 204, 21, .22);
+      color: #111827;
     }
 
     .secondary {
+      background: rgba(255,255,255,.12);
       color: var(--text);
-      background: rgba(255, 255, 255, .12);
-      border: 1px solid rgba(255, 255, 255, .14);
     }
 
     .toolbar {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      margin: 30px 0 18px;
+      margin-bottom: 16px;
+      gap: 10px;
     }
 
-    .toolbar h2 {
-      font-size: 28px;
-      letter-spacing: -0.04em;
-    }
+    .toolbar h2 { font-size: 26px; }
 
     .search {
-      max-width: 360px;
+      max-width: 260px;
     }
 
     .board {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
     }
 
     .note {
-      border-radius: 24px;
-      padding: 22px;
-      min-height: 220px;
+      border-radius: 20px;
+      padding: 20px;
+      min-height: 200px;
       position: relative;
-      overflow: hidden;
-      animation: pop .34s ease both;
     }
 
-    .note::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,.16), transparent 45%);
-      pointer-events: none;
-    }
-
-    .note[data-color="yellow"] { background: linear-gradient(135deg, rgba(250, 204, 21, .96), rgba(253, 230, 138, .9)); color: #1f2937; }
-    .note[data-color="blue"] { background: linear-gradient(135deg, rgba(56, 189, 248, .96), rgba(186, 230, 253, .9)); color: #082f49; }
-    .note[data-color="pink"] { background: linear-gradient(135deg, rgba(251, 113, 133, .96), rgba(254, 205, 211, .9)); color: #4c0519; }
-    .note[data-color="green"] { background: linear-gradient(135deg, rgba(74, 222, 128, .96), rgba(187, 247, 208, .9)); color: #052e16; }
+    .note[data-color="yellow"] { background: #fde68a; color: #1f2937; }
+    .note[data-color="blue"] { background: #bae6fd; color: #082f49; }
+    .note[data-color="pink"] { background: #fecdd3; color: #4c0519; }
+    .note[data-color="green"] { background: #bbf7d0; color: #052e16; }
 
     .note-header {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px;
-      position: relative;
-      z-index: 1;
+      margin-bottom: 10px;
     }
 
     .badge {
-      border-radius: 999px;
-      padding: 7px 10px;
-      background: rgba(255, 255, 255, .45);
       font-size: 12px;
-      font-weight: 800;
+      font-weight: bold;
     }
 
     .delete {
-      width: 34px;
-      height: 34px;
-      padding: 0;
-      border-radius: 50%;
-      background: rgba(15, 23, 42, .14);
-      color: inherit;
-    }
-
-    .note h3 {
-      font-size: 24px;
-      letter-spacing: -0.04em;
-      margin-bottom: 12px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .note p {
-      line-height: 1.55;
-      position: relative;
-      z-index: 1;
-      white-space: pre-wrap;
+      background: transparent;
+      font-size: 18px;
+      cursor: pointer;
     }
 
     .empty {
       grid-column: 1 / -1;
-      border: 1px dashed rgba(255,255,255,.22);
-      border-radius: 24px;
-      padding: 42px;
       text-align: center;
       color: var(--muted);
-      background: rgba(255,255,255,.05);
+      padding: 30px;
     }
 
-    @keyframes pop {
-      from { opacity: 0; transform: translateY(10px) scale(.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+    @media (max-width: 800px) {
+      .board { grid-template-columns: 1fr 1fr; }
     }
 
-    @media (max-width: 900px) {
-      body { padding: 18px; }
-      .hero { grid-template-columns: 1fr; }
-      .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-
-    @media (max-width: 620px) {
-      .hero-card, .composer { padding: 22px; }
-      .stats, .row, .board { grid-template-columns: 1fr; }
-      .toolbar { align-items: stretch; flex-direction: column; }
-      .search { max-width: none; }
+    @media (max-width: 500px) {
+      .board { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 1fr; }
       .actions { flex-direction: column; }
     }
   </style>
 </head>
 <body>
   <main class="app">
-    <section class="hero">
-       
 
-      <form class="composer" id="noteForm">
-        <h2>Novo lembrete</h2>
+    <form class="composer" id="noteForm">
+      <h1>Novo lembrete</h1>
 
-        <div class="field">
-          <label for="title">Título</label>
-          <input id="title" maxlength="48" placeholder="Ex: Estudar JavaScript" required />
-        </div>
-
-        <div class="field">
-          <label for="message">Descrição</label>
-          <textarea id="message" maxlength="280" placeholder="Escreva seu recado aqui..." required></textarea>
-        </div>
-
-        <div class="row">
-          <div class="field">
-            <label for="priority">Prioridade</label>
-            <select id="priority">
-              <option value="Normal">Normal</option>
-              <option value="Importante">Importante</option>
-              <option value="Urgente">Urgente</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="color">Cor</label>
-            <select id="color">
-              <option value="yellow">Amarelo</option>
-              <option value="blue">Azul</option>
-              <option value="pink">Rosa</option>
-              <option value="green">Verde</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="actions">
-          <button class="primary" type="submit">Salvar lembrete</button>
-          <button class="secondary" type="button" id="clearAll">Limpar tudo</button>
-        </div>
-      </form>
-    </section>
-
-    <section>
-      <div class="toolbar">
-        <h2>Seu mural</h2>
-        <input class="search" id="search" placeholder="Buscar lembrete..." />
+      <div class="field">
+        <label>Título</label>
+        <input id="title" required />
       </div>
 
-      <div class="board" id="board"></div>
-    </section>
+      <div class="field">
+        <label>Descrição</label>
+        <textarea id="message" required></textarea>
+      </div>
+
+      <div class="row">
+        <select id="priority">
+          <option>Normal</option>
+          <option>Importante</option>
+          <option>Urgente</option>
+        </select>
+
+        <select id="color">
+          <option value="yellow">Amarelo</option>
+          <option value="blue">Azul</option>
+          <option value="pink">Rosa</option>
+          <option value="green">Verde</option>
+        </select>
+      </div>
+
+      <div class="actions">
+        <button class="primary">Salvar</button>
+        <button type="button" class="secondary" id="clearAll">Limpar</button>
+      </div>
+    </form>
+
+    <div class="toolbar">
+      <h2>Mural</h2>
+      <input class="search" id="search" placeholder="Buscar..." />
+    </div>
+
+    <div class="board" id="board"></div>
+
   </main>
 
   <script>
@@ -401,88 +226,59 @@
     const board = document.querySelector('#board');
     const search = document.querySelector('#search');
     const clearAll = document.querySelector('#clearAll');
-    const totalNotes = document.querySelector('#totalNotes');
-    const highNotes = document.querySelector('#highNotes');
 
-    let notes = JSON.parse(localStorage.getItem('modernPostIts')) || [
-      {
-        id: crypto.randomUUID(),
-        title: 'Bem-vindo!',
-        message: 'Este é o novo visual do seu mural de lembretes. Edite, crie e organize seus recados.',
-        priority: 'Normal',
-        color: 'yellow'
-      }
-    ];
+    let notes = JSON.parse(localStorage.getItem('postits')) || [];
 
     function save() {
-      localStorage.setItem('modernPostIts', JSON.stringify(notes));
+      localStorage.setItem('postits', JSON.stringify(notes));
     }
 
     function render() {
-      const term = search.value.toLowerCase().trim();
-      const filtered = notes.filter(note =>
-        note.title.toLowerCase().includes(term) ||
-        note.message.toLowerCase().includes(term) ||
-        note.priority.toLowerCase().includes(term)
+      const term = search.value.toLowerCase();
+      const filtered = notes.filter(n =>
+        n.title.toLowerCase().includes(term) ||
+        n.message.toLowerCase().includes(term)
       );
 
-       
-     // highNotes.textContent = notes.filter(note => note.priority === 'Urgente').length;
-
       if (!filtered.length) {
-        board.innerHTML = '<div class="empty">Nenhum lembrete encontrado. Crie um novo post-it para começar.</div>';
+        board.innerHTML = '<div class="empty">Nenhum lembrete</div>';
         return;
       }
 
-      board.innerHTML = filtered.map(note => `
-        <article class="note" data-color="${note.color}">
+      board.innerHTML = filtered.map(n => `
+        <div class="note" data-color="${n.color}">
           <div class="note-header">
-            <span class="badge">${note.priority}</span>
-            <button class="delete" onclick="deleteNote('${note.id}')" aria-label="Excluir lembrete">×</button>
+            <span class="badge">${n.priority}</span>
+            <button class="delete" onclick="del('${n.id}')">×</button>
           </div>
-          <h3>${escapeHTML(note.title)}</h3>
-          <p>${escapeHTML(note.message)}</p>
-        </article>
+          <h3>${n.title}</h3>
+          <p>${n.message}</p>
+        </div>
       `).join('');
     }
 
-    function escapeHTML(text) {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
+    function del(id) {
+      notes = notes.filter(n => n.id !== id);
+      save(); render();
     }
 
-    function deleteNote(id) {
-      notes = notes.filter(note => note.id !== id);
-      save();
-      render();
-    }
-
-    form.addEventListener('submit', event => {
-      event.preventDefault();
-
+    form.onsubmit = e => {
+      e.preventDefault();
       notes.unshift({
         id: crypto.randomUUID(),
-        title: document.querySelector('#title').value.trim(),
-        message: document.querySelector('#message').value.trim(),
-        priority: document.querySelector('#priority').value,
-        color: document.querySelector('#color').value
+        title: title.value,
+        message: message.value,
+        priority: priority.value,
+        color: color.value
       });
+      form.reset(); save(); render();
+    };
 
-      form.reset();
-      save();
-      render();
-    });
+    search.oninput = render;
 
-    search.addEventListener('input', render);
-
-    clearAll.addEventListener('click', () => {
-      if (confirm('Tem certeza que deseja apagar todos os lembretes?')) {
-        notes = [];
-        save();
-        render();
-      }
-    });
+    clearAll.onclick = () => {
+      notes = []; save(); render();
+    };
 
     render();
   </script>
