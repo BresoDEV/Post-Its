@@ -1,123 +1,490 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lembretes</title>
-
-
-</head>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        background-color: #333;
-        -webkit-tap-highlight-color: transparent;
-        -webkit-touch-callout: none;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lembretes | Post-Its</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: rgba(255, 255, 255, 0.08);
+      --panel-strong: rgba(255, 255, 255, 0.14);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #facc15;
+      --accent-2: #38bdf8;
+      --danger: #fb7185;
+      --radius-xl: 28px;
+      --radius-md: 18px;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    .lembrete {
-        width: 75%;
-        background-color: blue;
-        border-radius: 5px;
-        padding: 10px;
-        color: aliceblue;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.24), transparent 34%),
+        radial-gradient(circle at top right, rgba(250, 204, 21, 0.20), transparent 30%),
+        linear-gradient(135deg, #020617 0%, #0f172a 48%, #111827 100%);
+      padding: 32px;
+    }
+
+    .app {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: 28px;
+    }
+
+    .hero-card,
+    .composer,
+    .note {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: var(--panel);
+      backdrop-filter: blur(22px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      border-radius: var(--radius-xl);
+      padding: 34px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      right: -62px;
+      top: -74px;
+      background: linear-gradient(135deg, rgba(250, 204, 21, .62), rgba(56, 189, 248, .34));
+      border-radius: 50%;
+      filter: blur(2px);
+      opacity: .8;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #fde68a;
+      background: rgba(250, 204, 21, .12);
+      border: 1px solid rgba(250, 204, 21, .24);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      max-width: 620px;
+      font-size: clamp(38px, 7vw, 78px);
+      line-height: .92;
+      letter-spacing: -0.07em;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-card p {
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.65;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat {
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .composer {
+      border-radius: var(--radius-xl);
+      padding: 24px;
+    }
+
+    .composer h2 {
+      font-size: 22px;
+      margin-bottom: 16px;
+      letter-spacing: -0.03em;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      color: #cbd5e1;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
     }
 
     input,
-    button,textarea {
-        background-color: #333;
-        width: 50%;
-        padding: 5px;
-        color: aliceblue;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+    textarea,
+    select {
+      width: 100%;
+      color: var(--text);
+      background: rgba(15, 23, 42, .72);
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 16px;
+      padding: 14px 15px;
+      outline: none;
+      font: inherit;
+      transition: .2s ease;
     }
-    textarea{
-        height: 50px;
-    }
-</style>
 
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: rgba(56, 189, 248, .8);
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, .12);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    .primary {
+      flex: 1;
+      color: #111827;
+      background: linear-gradient(135deg, #facc15, #fde68a);
+      box-shadow: 0 18px 40px rgba(250, 204, 21, .22);
+    }
+
+    .secondary {
+      color: var(--text);
+      background: rgba(255, 255, 255, .12);
+      border: 1px solid rgba(255, 255, 255, .14);
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin: 30px 0 18px;
+    }
+
+    .toolbar h2 {
+      font-size: 28px;
+      letter-spacing: -0.04em;
+    }
+
+    .search {
+      max-width: 360px;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .note {
+      border-radius: 24px;
+      padding: 22px;
+      min-height: 220px;
+      position: relative;
+      overflow: hidden;
+      animation: pop .34s ease both;
+    }
+
+    .note::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.16), transparent 45%);
+      pointer-events: none;
+    }
+
+    .note[data-color="yellow"] { background: linear-gradient(135deg, rgba(250, 204, 21, .96), rgba(253, 230, 138, .9)); color: #1f2937; }
+    .note[data-color="blue"] { background: linear-gradient(135deg, rgba(56, 189, 248, .96), rgba(186, 230, 253, .9)); color: #082f49; }
+    .note[data-color="pink"] { background: linear-gradient(135deg, rgba(251, 113, 133, .96), rgba(254, 205, 211, .9)); color: #4c0519; }
+    .note[data-color="green"] { background: linear-gradient(135deg, rgba(74, 222, 128, .96), rgba(187, 247, 208, .9)); color: #052e16; }
+
+    .note-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: rgba(255, 255, 255, .45);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .delete {
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, .14);
+      color: inherit;
+    }
+
+    .note h3 {
+      font-size: 24px;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .note p {
+      line-height: 1.55;
+      position: relative;
+      z-index: 1;
+      white-space: pre-wrap;
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+      border: 1px dashed rgba(255,255,255,.22);
+      border-radius: 24px;
+      padding: 42px;
+      text-align: center;
+      color: var(--muted);
+      background: rgba(255,255,255,.05);
+    }
+
+    @keyframes pop {
+      from { opacity: 0; transform: translateY(10px) scale(.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (max-width: 900px) {
+      body { padding: 18px; }
+      .hero { grid-template-columns: 1fr; }
+      .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 620px) {
+      .hero-card, .composer { padding: 22px; }
+      .stats, .row, .board { grid-template-columns: 1fr; }
+      .toolbar { align-items: stretch; flex-direction: column; }
+      .search { max-width: none; }
+      .actions { flex-direction: column; }
+    }
+  </style>
+</head>
 <body>
-    <center>
-        <br>
-        <br>
-        <div style="background-color:#666 ; padding: 10px;">
-            <textarea type="text" name="" id="Lembrete" placeholder="Digite aqui seu lembrete..."></textarea><br>
-            <input type="color" value="#166116" id="cor" style="padding: 0;"><br><br>
-            <button id="Salvar">Salvar</button><br>
+  <main class="app">
+    <section class="hero">
+       
+
+      <form class="composer" id="noteForm">
+        <h2>Novo lembrete</h2>
+
+        <div class="field">
+          <label for="title">Título</label>
+          <input id="title" maxlength="48" placeholder="Ex: Estudar JavaScript" required />
         </div>
-        <br>
-        <br>
 
-
-        <script>
-
-            //Lista os lembretes salvos
-            for (let index = 0; index < 100; index++) {
-                if (localStorage.getItem('lembreteTexto_' + index)) {
-                    document.write(`
-                    <div class="lembrete" style="background-color: ${localStorage.getItem('lembreteCor_' + index)
-                        }">
-            <button id="lembrete${index}" style="background-color:red;color:aliceblue;padding:3px;width:10%">X</button><br>
-            
-        <br>
-         ${localStorage.getItem('lembreteTexto_' + index)
-                        }
+        <div class="field">
+          <label for="message">Descrição</label>
+          <textarea id="message" maxlength="280" placeholder="Escreva seu recado aqui..." required></textarea>
         </div>
-        <br>
-        <br>
-                    `);
-                }
-            }
-        </script>
 
+        <div class="row">
+          <div class="field">
+            <label for="priority">Prioridade</label>
+            <select id="priority">
+              <option value="Normal">Normal</option>
+              <option value="Importante">Importante</option>
+              <option value="Urgente">Urgente</option>
+            </select>
+          </div>
 
+          <div class="field">
+            <label for="color">Cor</label>
+            <select id="color">
+              <option value="yellow">Amarelo</option>
+              <option value="blue">Azul</option>
+              <option value="pink">Rosa</option>
+              <option value="green">Verde</option>
+            </select>
+          </div>
+        </div>
 
+        <div class="actions">
+          <button class="primary" type="submit">Salvar lembrete</button>
+          <button class="secondary" type="button" id="clearAll">Limpar tudo</button>
+        </div>
+      </form>
+    </section>
 
-    </center>
-</body>
-<script>
-    //opcao de deletar ao clicar no botao
-    for (let index = 0; index < 100; index++) {
-        if (document.getElementById('lembrete' + index)) {
-            document.getElementById('lembrete' + index).addEventListener('click', () => {
-                localStorage.removeItem('lembreteTexto_' + index);
-                localStorage.removeItem('lembreteCor_' + index);
-                window.location.reload();
-            })
-        }
+    <section>
+      <div class="toolbar">
+        <h2>Seu mural</h2>
+        <input class="search" id="search" placeholder="Buscar lembrete..." />
+      </div>
+
+      <div class="board" id="board"></div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.querySelector('#noteForm');
+    const board = document.querySelector('#board');
+    const search = document.querySelector('#search');
+    const clearAll = document.querySelector('#clearAll');
+    const totalNotes = document.querySelector('#totalNotes');
+    const highNotes = document.querySelector('#highNotes');
+
+    let notes = JSON.parse(localStorage.getItem('modernPostIts')) || [
+      {
+        id: crypto.randomUUID(),
+        title: 'Bem-vindo!',
+        message: 'Este é o novo visual do seu mural de lembretes. Edite, crie e organize seus recados.',
+        priority: 'Normal',
+        color: 'yellow'
+      }
+    ];
+
+    function save() {
+      localStorage.setItem('modernPostIts', JSON.stringify(notes));
     }
-</script>
 
-<script>
+    function render() {
+      const term = search.value.toLowerCase().trim();
+      const filtered = notes.filter(note =>
+        note.title.toLowerCase().includes(term) ||
+        note.message.toLowerCase().includes(term) ||
+        note.priority.toLowerCase().includes(term)
+      );
 
-    const Lembretes = document.getElementById('Lembrete');
-    const cor = document.getElementById('cor');
-    const Salvar = document.getElementById('Salvar');
+       
+     // highNotes.textContent = notes.filter(note => note.priority === 'Urgente').length;
 
+      if (!filtered.length) {
+        board.innerHTML = '<div class="empty">Nenhum lembrete encontrado. Crie um novo post-it para começar.</div>';
+        return;
+      }
 
+      board.innerHTML = filtered.map(note => `
+        <article class="note" data-color="${note.color}">
+          <div class="note-header">
+            <span class="badge">${note.priority}</span>
+            <button class="delete" onclick="deleteNote('${note.id}')" aria-label="Excluir lembrete">×</button>
+          </div>
+          <h3>${escapeHTML(note.title)}</h3>
+          <p>${escapeHTML(note.message)}</p>
+        </article>
+      `).join('');
+    }
 
-    //Add um lembrete
-    Salvar.addEventListener('click', () => {
+    function escapeHTML(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
 
-        let i = 0;
+    function deleteNote(id) {
+      notes = notes.filter(note => note.id !== id);
+      save();
+      render();
+    }
 
-        for (let index = 0; index < 100; index++) {
-            if (!localStorage.getItem('lembreteTexto_' + index)) {
-                i = index;
-                break;
-            }
-        }
-        localStorage.setItem('lembreteTexto_' + i, Lembretes.value);
-        localStorage.setItem('lembreteCor_' + i, cor.value);
-        window.location.reload();
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+
+      notes.unshift({
+        id: crypto.randomUUID(),
+        title: document.querySelector('#title').value.trim(),
+        message: document.querySelector('#message').value.trim(),
+        priority: document.querySelector('#priority').value,
+        color: document.querySelector('#color').value
+      });
+
+      form.reset();
+      save();
+      render();
     });
 
-</script>
+    search.addEventListener('input', render);
 
+    clearAll.addEventListener('click', () => {
+      if (confirm('Tem certeza que deseja apagar todos os lembretes?')) {
+        notes = [];
+        save();
+        render();
+      }
+    });
+
+    render();
+  </script>
+</body>
 </html>
